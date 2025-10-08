@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: linear-gradient(to bottom, #0B0B0D, #001F3F); /* Jet Black to Deep Blue */
+}
+
+.neon-glow {
+  text-shadow: 0 0 10px #00FFFF, 0 0 20px #B026FF;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
