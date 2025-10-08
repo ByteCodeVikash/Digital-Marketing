@@ -67,40 +67,40 @@ function HolographicGlobe() {
 
   return (
     <group>
-      {/* Main Globe */}
+      {/* Main Globe - Cyan Color */}
       <mesh ref={globeRef}>
         <sphereGeometry args={[2.5, 64, 64]} />
         <meshStandardMaterial 
-          color="#00FFFF"
+          color="#00F0FF"
           wireframe
           transparent
           opacity={0.3}
-          emissive="#00FFFF"
+          emissive="#00F0FF"
           emissiveIntensity={0.5}
         />
       </mesh>
 
-      {/* Inner Glow Sphere */}
+      {/* Inner Glow Sphere - Purple */}
       <mesh>
         <sphereGeometry args={[2.3, 32, 32]} />
         <meshBasicMaterial 
-          color="#B026FF"
+          color="#7B2CBF"
           transparent
           opacity={0.1}
         />
       </mesh>
 
-      {/* Data Lines */}
+      {/* Data Lines - Cyan */}
       <lineSegments ref={linesRef}>
         <bufferGeometry />
-        <lineBasicMaterial color="#00FFFF" transparent opacity={0.6} />
+        <lineBasicMaterial color="#00F0FF" transparent opacity={0.6} />
       </lineSegments>
 
-      {/* Particles */}
+      {/* Particles - Pink */}
       <points ref={particlesRef}>
         <bufferGeometry />
         <pointsMaterial 
-          color="#00FFFF" 
+          color="#FF006E" 
           size={0.05} 
           transparent 
           opacity={0.6}
@@ -190,45 +190,9 @@ function MouseLight() {
       ref={lightRef} 
       position={[0, 0, 5]} 
       intensity={2} 
-      color="#00FFFF"
+      color="#00F0FF"
       distance={10}
     />
-  );
-}
-
-// Binary Rain Background
-function BinaryRain() {
-  const groupRef = useRef();
-
-  useFrame(() => {
-    if (groupRef.current) {
-      groupRef.current.children.forEach((child, i) => {
-        child.position.y -= 0.05;
-        if (child.position.y < -10) {
-          child.position.y = 10;
-        }
-      });
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      {Array.from({ length: 50 }).map((_, i) => (
-        <Text
-          key={i}
-          position={[
-            (Math.random() - 0.5) * 20,
-            Math.random() * 20 - 10,
-            -5
-          ]}
-          fontSize={0.3}
-          color="#00FFFF"
-          opacity={0.2}
-        >
-          {Math.random() > 0.5 ? '1' : '0'}
-        </Text>
-      ))}
-    </group>
   );
 }
 
@@ -237,16 +201,16 @@ export default function Hero() {
 
   const slides = [
     {
-      title: "AdMark — The Future of Digital Growth",
-      subtitle: "We don't market, we magnetize."
+      title: "AdMark — Magnetize Your Growth",
+      subtitle: "We don't just market, we magnetize customers to your brand"
     },
     {
-      title: "Transform Your Digital Presence",
-      subtitle: "Data-driven strategies that deliver real results"
+      title: "Transform Digital Presence",
+      subtitle: "Data-driven strategies that deliver measurable results"
     },
     {
       title: "Dominate The Digital World",
-      subtitle: "Where innovation meets execution"
+      subtitle: "Where innovation meets execution for exponential growth"
     }
   ];
 
@@ -255,9 +219,9 @@ export default function Hero() {
     { pos: [0, 0, 0], icon: '👍', color: '#1877F2', speed: 0.4, radius: 5, label: 'Facebook' },
     { pos: [0, 0, 0], icon: '▶️', color: '#FF0000', speed: 0.5, radius: 4.5, label: 'YouTube' },
     { pos: [0, 0, 0], icon: '💰', color: '#34A853', speed: 0.35, radius: 5.5, label: 'Ads' },
-    { pos: [0, 0, 0], icon: '🔍', color: '#00FFFF', speed: 0.45, radius: 4.8, label: 'SEO' },
+    { pos: [0, 0, 0], icon: '🔍', color: '#00F0FF', speed: 0.45, radius: 4.8, label: 'SEO' },
     { pos: [0, 0, 0], icon: '📧', color: '#EA4335', speed: 0.4, radius: 5.2, label: 'Email' },
-    { pos: [0, 0, 0], icon: '📊', color: '#B026FF', speed: 0.38, radius: 4.3, label: 'Analytics' },
+    { pos: [0, 0, 0], icon: '📊', color: '#7B2CBF', speed: 0.38, radius: 4.3, label: 'Analytics' },
   ];
 
   useEffect(() => {
@@ -290,7 +254,7 @@ export default function Hero() {
       id="home" 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ 
-        background: 'linear-gradient(to bottom, #0B0B0D 0%, #001F3F 100%)'
+        background: 'linear-gradient(180deg, #0A0A0A 0%, #141414 100%)'
       }}
     >
       {/* 3D Canvas */}
@@ -304,11 +268,10 @@ export default function Hero() {
           gl={{ alpha: true, antialias: true }}
         >
           <ambientLight intensity={0.3} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#B026FF" />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00FFFF" />
+          <pointLight position={[10, 10, 10]} intensity={1} color="#7B2CBF" />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00F0FF" />
           
           <HolographicGlobe />
-          <BinaryRain />
           <MouseLight />
           
           {socialIcons.map((icon, i) => (
@@ -338,24 +301,15 @@ export default function Hero() {
           key={currentSlide}
         >
           <h1 
-            className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 leading-tight"
-            style={{
-              background: 'linear-gradient(90deg, #00FFFF 0%, #B026FF 50%, #00FFFF 100%)',
-              backgroundSize: '200% 100%',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              animation: 'gradient 3s ease infinite',
-              filter: 'drop-shadow(0 0 30px rgba(0, 255, 255, 0.5))',
-            }}
+            className="text-5xl sm:text-6xl md:text-8xl font-black mb-6 leading-tight gradient-text-admark neon-glow-cyan"
           >
             {slides[currentSlide].title}
           </h1>
           <p 
-            className="text-lg sm:text-xl md:text-2xl mb-12 font-medium max-w-3xl mx-auto"
+            className="text-xl sm:text-2xl md:text-3xl mb-12 font-medium max-w-3xl mx-auto"
             style={{
-              color: '#ffffff',
-              textShadow: '0 0 20px rgba(176, 38, 255, 0.5)',
+              color: 'rgba(255, 255, 255, 0.9)',
+              textShadow: '0 0 20px rgba(0, 240, 255, 0.3)',
             }}
           >
             {slides[currentSlide].subtitle}
@@ -370,56 +324,40 @@ export default function Hero() {
               onClick={() => setCurrentSlide(index)}
               className={`h-2 rounded-full transition-all duration-300 ${
                 index === currentSlide 
-                  ? 'w-12 bg-cyan-400' 
+                  ? 'w-12 bg-admark-cyan shadow-neon-cyan' 
                   : 'w-2 bg-gray-600 hover:bg-gray-400'
               }`}
-              style={{
-                boxShadow: index === currentSlide 
-                  ? '0 0 20px rgba(0, 255, 255, 0.8)' 
-                  : 'none'
-              }}
             />
           ))}
         </div>
 
-        {/* CTA Button - Glassmorphism */}
+        {/* CTA Button - Glassmorphism with Neon */}
         <button 
-          className="group relative px-10 py-5 rounded-full text-lg md:text-xl font-bold transition-all duration-500 overflow-hidden"
+          className="group relative px-10 py-5 rounded-full text-lg md:text-xl font-bold transition-all duration-500 glassmorphism-strong hover:scale-105 pulse-glow"
           style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(10px)',
-            border: '2px solid rgba(0, 255, 255, 0.3)',
-            boxShadow: '0 0 30px rgba(0, 255, 255, 0.3)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            e.currentTarget.style.boxShadow = '0 0 50px rgba(0, 255, 255, 0.9)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.3)';
+            border: '2px solid rgba(0, 240, 255, 0.4)',
           }}
         >
-          <span 
-            className="relative z-10"
-            style={{
-              background: 'linear-gradient(90deg, #00FFFF, #B026FF)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            Explore Campaigns 🚀
+          <span className="gradient-text-cyan-pink">
+            Explore Our Services 🚀
           </span>
         </button>
-      </div>
 
-      {/* Gradient Animation Keyframes */}
-      <style>{`
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-      `}</style>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-sm text-admark-cyan font-medium">Scroll for more</span>
+            <svg 
+              className="w-6 h-6 text-admark-cyan" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

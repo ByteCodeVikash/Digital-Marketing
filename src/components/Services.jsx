@@ -74,7 +74,6 @@ function RotatingCard({ position, service, isFlipped, onFlip }) {
           anchorY="middle"
           maxWidth={2}
           textAlign="center"
-          //font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff"
           fontWeight="bold"
         >
           {service.title}
@@ -84,18 +83,18 @@ function RotatingCard({ position, service, isFlipped, onFlip }) {
         <Text
           position={[0, -1.2, 0.06]}
           fontSize={0.15}
-          color="#00FFFF"
+          color="#00F0FF"
           anchorX="center"
           anchorY="middle"
         >
-          Click to flip
+          Click to explore
         </Text>
 
         {/* Glow Ring on Hover */}
         {hovered && (
           <mesh rotation={[0, 0, 0]} position={[0, 0, -0.05]}>
             <ringGeometry args={[1.8, 2, 32]} />
-            <meshBasicMaterial color="#00FFFF" transparent opacity={0.3} side={THREE.DoubleSide} />
+            <meshBasicMaterial color="#00F0FF" transparent opacity={0.3} side={THREE.DoubleSide} />
           </mesh>
         )}
       </group>
@@ -104,8 +103,8 @@ function RotatingCard({ position, service, isFlipped, onFlip }) {
       <group visible={isFlipped} rotation={[0, Math.PI, 0]}>
         <RoundedBox args={[2.5, 3, 0.1]} radius={0.1}>
           <meshStandardMaterial
-            color="#0B0B0D"
-            emissive="#B026FF"
+            color="#0A0A0A"
+            emissive={service.color}
             emissiveIntensity={0.3}
             metalness={0.9}
             roughness={0.1}
@@ -132,7 +131,7 @@ function RotatingCard({ position, service, isFlipped, onFlip }) {
         <Text
           position={[0, -0.8, 0.06]}
           fontSize={0.12}
-          color="#00FFFF"
+          color="#00F0FF"
           anchorX="center"
           anchorY="middle"
           maxWidth={2.2}
@@ -145,7 +144,7 @@ function RotatingCard({ position, service, isFlipped, onFlip }) {
         <Text
           position={[0, -1.3, 0.06]}
           fontSize={0.13}
-          color="#B026FF"
+          color="#FF006E"
           anchorX="center"
           anchorY="middle"
         >
@@ -158,7 +157,7 @@ function RotatingCard({ position, service, isFlipped, onFlip }) {
         <points>
           <sphereGeometry args={[2, 16, 16]} />
           <pointsMaterial
-            color="#00FFFF"
+            color={service.color}
             size={0.05}
             transparent
             opacity={0.6}
@@ -200,7 +199,7 @@ function FloatingParticles() {
         />
       </bufferGeometry>
       <pointsMaterial
-        color="#B026FF"
+        color="#7B2CBF"
         size={0.1}
         transparent
         opacity={0.4}
@@ -219,42 +218,42 @@ export default function Services() {
       title: 'SEO Services',
       desc: 'Dominate search rankings with cutting-edge optimization strategies.',
       features: '✓ Technical SEO ✓ Link Building ✓ Content Strategy',
-      color: '#00FFFF'
+      color: '#00F0FF'
     },
     {
       icon: '📱',
       title: 'Social Media Marketing',
       desc: 'Build viral campaigns that convert followers into customers.',
       features: '✓ Content Creation ✓ Community Management ✓ Paid Ads',
-      color: '#B026FF'
+      color: '#7B2CBF'
     },
     {
       icon: '💰',
       title: 'PPC Advertising',
       desc: 'Maximize ROI with data-driven paid advertising campaigns.',
       features: '✓ Google Ads ✓ Facebook Ads ✓ Retargeting',
-      color: '#00FFFF'
+      color: '#FF006E'
     },
     {
       icon: '💻',
       title: 'Web Development',
       desc: 'Lightning-fast, conversion-optimized websites that wow.',
       features: '✓ Custom Design ✓ Responsive ✓ E-commerce',
-      color: '#B026FF'
+      color: '#00F0FF'
     },
     {
       icon: '✍️',
       title: 'Content Marketing',
       desc: 'Compelling stories that engage, educate, and convert.',
       features: '✓ Blog Writing ✓ Video Scripts ✓ Email Campaigns',
-      color: '#00FFFF'
+      color: '#7B2CBF'
     },
     {
       icon: '📊',
       title: 'Analytics & Reporting',
       desc: 'Real-time insights that drive intelligent marketing decisions.',
       features: '✓ Custom Dashboards ✓ Performance Tracking ✓ A/B Testing',
-      color: '#B026FF'
+      color: '#FF006E'
     }
   ];
 
@@ -279,7 +278,7 @@ export default function Services() {
       id="services"
       className="relative py-20 md:py-32 px-4 overflow-hidden"
       style={{
-        background: 'linear-gradient(to bottom, transparent, rgba(176, 38, 255, 0.1))'
+        background: 'linear-gradient(180deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%)'
       }}
     >
       {/* Animated Header */}
@@ -290,24 +289,11 @@ export default function Services() {
         viewport={{ once: true }}
         className="max-w-7xl mx-auto mb-16 text-center"
       >
-        <h2
-          className="text-5xl md:text-7xl font-black mb-6"
-          style={{
-            background: 'linear-gradient(90deg, #00FFFF 0%, #B026FF 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 0 30px rgba(0, 255, 255, 0.5))',
-          }}
-        >
+        <h2 className="text-5xl md:text-7xl font-black mb-6 gradient-text-admark neon-glow-cyan">
           Our Services
         </h2>
-        <p
-          className="text-xl text-gray-300 max-w-3xl mx-auto"
-          style={{
-            textShadow: '0 0 20px rgba(176, 38, 255, 0.3)',
-          }}
-        >
-          Next-generation digital marketing solutions powered by innovation
+        <p className="text-xl md:text-2xl max-w-3xl mx-auto" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+          Choose your growth plan and watch your business transform
         </p>
       </motion.div>
 
@@ -318,9 +304,9 @@ export default function Services() {
           gl={{ alpha: true, antialias: true }}
         >
           <ambientLight intensity={0.4} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#00FFFF" />
-          <pointLight position={[-10, -10, -10]} intensity={0.8} color="#B026FF" />
-          <pointLight position={[0, 0, 15]} intensity={0.5} color="white" />
+          <pointLight position={[10, 10, 10]} intensity={1} color="#00F0FF" />
+          <pointLight position={[-10, -10, -10]} intensity={0.8} color="#7B2CBF" />
+          <pointLight position={[0, 0, 15]} intensity={0.5} color="#FF006E" />
 
           <FloatingParticles />
 
@@ -345,39 +331,29 @@ export default function Services() {
         className="text-center mt-16"
       >
         <button
-          className="group relative px-8 py-4 rounded-full text-lg font-bold transition-all duration-500"
+          className="group relative px-10 py-5 rounded-full text-lg md:text-xl font-bold transition-all duration-500 glassmorphism-strong hover:scale-105"
           style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(10px)',
-            border: '2px solid rgba(0, 255, 255, 0.3)',
-            boxShadow: '0 0 30px rgba(0, 255, 255, 0.3)',
+            border: '2px solid rgba(0, 240, 255, 0.4)',
+            boxShadow: '0 0 30px rgba(0, 240, 255, 0.3)',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 0 50px rgba(176, 38, 255, 0.8)';
-            e.currentTarget.style.borderColor = 'rgba(176, 38, 255, 0.6)';
+            e.currentTarget.style.boxShadow = '0 0 50px rgba(255, 0, 110, 0.6)';
+            e.currentTarget.style.borderColor = 'rgba(255, 0, 110, 0.6)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.3)';
-            e.currentTarget.style.borderColor = 'rgba(0, 255, 255, 0.3)';
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 240, 255, 0.3)';
+            e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.4)';
           }}
         >
-          <span
-            style={{
-              background: 'linear-gradient(90deg, #00FFFF, #B026FF)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            View All Services →
+          <span className="gradient-text-cyan-pink">
+            Get Custom Quote →
           </span>
         </button>
       </motion.div>
 
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-cyan-400 rounded-full opacity-10 blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-40 h-40 bg-purple-600 rounded-full opacity-10 blur-3xl" />
+      {/* Decorative Neon Orbs */}
+      <div className="absolute top-20 left-10 w-40 h-40 bg-admark-cyan rounded-full opacity-10 blur-3xl animate-float" />
+      <div className="absolute bottom-20 right-10 w-48 h-48 bg-admark-pink rounded-full opacity-10 blur-3xl" style={{ animation: 'float 8s ease-in-out infinite', animationDelay: '2s' }} />
     </section>
   );
 }
