@@ -42,13 +42,19 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-blue-900 text-white overflow-hidden">
-      {/* Cursor Trail */}
+      {/* Enhanced Cursor Trail */}
       <div 
-        className="fixed w-4 h-4 bg-cyan-400 rounded-full pointer-events-none blur-sm opacity-50 transition-all duration-75 z-50"
-        style={{ left: mousePos.x - 8, top: mousePos.y - 8 }}
+        className="fixed w-6 h-6 rounded-full pointer-events-none z-50 transition-all duration-100"
+        style={{ 
+          left: mousePos.x - 12, 
+          top: mousePos.y - 12,
+          background: 'radial-gradient(circle, rgba(0,255,255,0.8) 0%, rgba(176,38,255,0.4) 50%, transparent 70%)',
+          boxShadow: '0 0 20px rgba(0,255,255,0.8)',
+          filter: 'blur(2px)',
+        }}
       />
 
-      <Navbar /> {/* Yahan Navbar add kiya */}
+      <Navbar />
       <Hero />
       <Services />
       <CaseStudy />
