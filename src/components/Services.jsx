@@ -1,359 +1,289 @@
-import React, { useState, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Text, RoundedBox } from '@react-three/drei';
+import React from 'react';
 import { motion } from 'framer-motion';
-import * as THREE from 'three';
-
-// 3D Rotating Card Component
-function RotatingCard({ position, service, isFlipped, onFlip }) {
-  const cardRef = useRef();
-  const [hovered, setHovered] = useState(false);
-
-  useFrame((state) => {
-    if (cardRef.current) {
-      // Smooth rotation animation
-      const targetRotationY = isFlipped ? Math.PI : 0;
-      cardRef.current.rotation.y = THREE.MathUtils.lerp(
-        cardRef.current.rotation.y,
-        targetRotationY,
-        0.1
-      );
-
-      // Hover effect - floating
-      if (hovered) {
-        cardRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.1 + 0.3;
-      } else {
-        cardRef.current.position.y = THREE.MathUtils.lerp(
-          cardRef.current.position.y,
-          position[1],
-          0.1
-        );
-      }
-    }
-  });
-
-  return (
-    <group
-      ref={cardRef}
-      position={position}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-      onClick={onFlip}
-    >
-      {/* Front Side */}
-      <group visible={!isFlipped}>
-        <RoundedBox args={[2.5, 3, 0.1]} radius={0.1}>
-          <meshStandardMaterial
-            color={service.color}
-            emissive={service.color}
-            emissiveIntensity={hovered ? 0.5 : 0.2}
-            metalness={0.8}
-            roughness={0.2}
-            transparent
-            opacity={0.9}
-          />
-        </RoundedBox>
-
-        {/* Icon */}
-        <Text
-          position={[0, 0.8, 0.06]}
-          fontSize={0.6}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {service.icon}
-        </Text>
-
-        {/* Title */}
-        <Text
-          position={[0, 0, 0.06]}
-          fontSize={0.25}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={2}
-          textAlign="center"
-          fontWeight="bold"
-        >
-          {service.title}
-        </Text>
-
-        {/* Click hint */}
-        <Text
-          position={[0, -1.2, 0.06]}
-          fontSize={0.15}
-          color="#00F0FF"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Click to explore
-        </Text>
-
-        {/* Glow Ring on Hover */}
-        {hovered && (
-          <mesh rotation={[0, 0, 0]} position={[0, 0, -0.05]}>
-            <ringGeometry args={[1.8, 2, 32]} />
-            <meshBasicMaterial color="#00F0FF" transparent opacity={0.3} side={THREE.DoubleSide} />
-          </mesh>
-        )}
-      </group>
-
-      {/* Back Side */}
-      <group visible={isFlipped} rotation={[0, Math.PI, 0]}>
-        <RoundedBox args={[2.5, 3, 0.1]} radius={0.1}>
-          <meshStandardMaterial
-            color="#0A0A0A"
-            emissive={service.color}
-            emissiveIntensity={0.3}
-            metalness={0.9}
-            roughness={0.1}
-            transparent
-            opacity={0.95}
-          />
-        </RoundedBox>
-
-        {/* Description */}
-        <Text
-          position={[0, 0.3, 0.06]}
-          fontSize={0.15}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={2.2}
-          textAlign="center"
-          lineHeight={1.3}
-        >
-          {service.desc}
-        </Text>
-
-        {/* Features */}
-        <Text
-          position={[0, -0.8, 0.06]}
-          fontSize={0.12}
-          color="#00F0FF"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={2.2}
-          textAlign="center"
-        >
-          {service.features}
-        </Text>
-
-        {/* Click to flip back */}
-        <Text
-          position={[0, -1.3, 0.06]}
-          fontSize={0.13}
-          color="#FF006E"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Click to flip back
-        </Text>
-      </group>
-
-      {/* Particle Effect on Hover */}
-      {hovered && (
-        <points>
-          <sphereGeometry args={[2, 16, 16]} />
-          <pointsMaterial
-            color={service.color}
-            size={0.05}
-            transparent
-            opacity={0.6}
-            sizeAttenuation
-          />
-        </points>
-      )}
-    </group>
-  );
-}
-
-// Floating Particles Background
-function FloatingParticles() {
-  const particlesRef = useRef();
-
-  useFrame((state) => {
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y = state.clock.elapsedTime * 0.05;
-    }
-  });
-
-  const particlePositions = [];
-  for (let i = 0; i < 200; i++) {
-    particlePositions.push(
-      (Math.random() - 0.5) * 30,
-      (Math.random() - 0.5) * 20,
-      (Math.random() - 0.5) * 20
-    );
-  }
-
-  return (
-    <points ref={particlesRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={particlePositions.length / 3}
-          array={new Float32Array(particlePositions)}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        color="#7B2CBF"
-        size={0.1}
-        transparent
-        opacity={0.4}
-        sizeAttenuation
-      />
-    </points>
-  );
-}
 
 export default function Services() {
-  const [flippedCards, setFlippedCards] = useState({});
-
   const services = [
-    {
-      icon: '🔍',
+    { 
       title: 'SEO Services',
-      desc: 'Dominate search rankings with cutting-edge optimization strategies.',
-      features: '✓ Technical SEO ✓ Link Building ✓ Content Strategy',
-      color: '#00F0FF'
+      description: 'Boost your search rankings and drive organic traffic with proven SEO strategies.'
     },
-    {
-      icon: '📱',
+    { 
       title: 'Social Media Marketing',
-      desc: 'Build viral campaigns that convert followers into customers.',
-      features: '✓ Content Creation ✓ Community Management ✓ Paid Ads',
-      color: '#7B2CBF'
+      description: 'Build your brand presence and engage audiences across all social platforms.'
     },
-    {
-      icon: '💰',
+    { 
       title: 'PPC Advertising',
-      desc: 'Maximize ROI with data-driven paid advertising campaigns.',
-      features: '✓ Google Ads ✓ Facebook Ads ✓ Retargeting',
-      color: '#FF006E'
+      description: 'Maximize ROI with targeted pay-per-click campaigns and data-driven strategies.'
     },
-    {
-      icon: '💻',
+    { 
       title: 'Web Development',
-      desc: 'Lightning-fast, conversion-optimized websites that wow.',
-      features: '✓ Custom Design ✓ Responsive ✓ E-commerce',
-      color: '#00F0FF'
+      description: 'Create stunning, high-performance websites that convert visitors into customers.'
     },
-    {
-      icon: '✍️',
+    { 
       title: 'Content Marketing',
-      desc: 'Compelling stories that engage, educate, and convert.',
-      features: '✓ Blog Writing ✓ Video Scripts ✓ Email Campaigns',
-      color: '#7B2CBF'
+      description: 'Engage your audience with compelling content that drives traffic and builds authority.'
     },
-    {
-      icon: '📊',
-      title: 'Analytics & Reporting',
-      desc: 'Real-time insights that drive intelligent marketing decisions.',
-      features: '✓ Custom Dashboards ✓ Performance Tracking ✓ A/B Testing',
-      color: '#FF006E'
+    { 
+      title: 'Brand Strategy & Design',
+      description: 'Build a memorable brand identity that resonates with your target audience.'
     }
   ];
 
-  const handleFlip = (index) => {
-    setFlippedCards(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
-
-  // Calculate grid positions
-  const getCardPosition = (index) => {
-    const row = Math.floor(index / 3);
-    const col = index % 3;
-    const x = (col - 1) * 3.5;
-    const y = -(row * 4) + 2;
-    return [x, y, 0];
-  };
-
   return (
-    <section
-      id="services"
-      className="relative py-20 md:py-32 px-4 overflow-hidden"
+    <section 
+      id="services" 
+      className="relative py-20 md:py-32 px-4"
       style={{
-        background: 'linear-gradient(180deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%)'
+        background: 'linear-gradient(180deg, #D4B896 0%, #E6D5B8 50%, #D4B896 100%)',
       }}
     >
-      {/* Animated Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="max-w-7xl mx-auto mb-16 text-center"
-      >
-        <h2 className="text-5xl md:text-7xl font-black mb-6 gradient-text-admark neon-glow-cyan">
-          Our Services
-        </h2>
-        <p className="text-xl md:text-2xl max-w-3xl mx-auto" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-          Choose your growth plan and watch your business transform
-        </p>
-      </motion.div>
-
-      {/* 3D Canvas with Cards */}
-      <div className="w-full h-[800px] md:h-[900px]">
-        <Canvas
-          camera={{ position: [0, 0, 12], fov: 50 }}
-          gl={{ alpha: true, antialias: true }}
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
         >
-          <ambientLight intensity={0.4} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#00F0FF" />
-          <pointLight position={[-10, -10, -10]} intensity={0.8} color="#7B2CBF" />
-          <pointLight position={[0, 0, 15]} intensity={0.5} color="#FF006E" />
+          <h2 
+            className="text-8xl md:text-[10rem] font-black uppercase"
+            style={{
+              color: '#1a1a1a',
+              fontFamily: "'Anton', 'Bebas Neue', 'Oswald', 'Impact', sans-serif",
+              letterSpacing: '0.08em',
+              fontWeight: '900',
+              lineHeight: '1',
+              margin: '0',
+              padding: '0',
+              transform: 'scaleX(0.85) scaleY(1.3)',
+              display: 'inline-block'
+            }}
+          >
+            SERVICES
+          </h2>
+        </motion.div>
 
-          <FloatingParticles />
-
-          {services.map((service, index) => (
-            <RotatingCard
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {services.slice(0, 3).map((service, index) => (
+            <motion.div
               key={index}
-              position={getCardPosition(index)}
-              service={service}
-              isFlipped={flippedCards[index]}
-              onFlip={() => handleFlip(index)}
-            />
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group relative overflow-hidden rounded-none transition-all duration-300"
+              style={{
+                background: '#1a1a1a',
+                minHeight: '280px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                padding: '40px 30px'
+              }}
+            >
+              <div>
+                <h3 
+                  className="text-2xl md:text-3xl font-bold mb-4"
+                  style={{
+                    color: '#D4B896',
+                    fontFamily: "'Arial Black', 'Impact', sans-serif",
+                    fontWeight: '900',
+                    lineHeight: '1.1',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  {service.title}
+                </h3>
+                <p 
+                  className="text-base mb-6"
+                  style={{
+                    color: 'rgba(212, 184, 150, 0.8)',
+                    lineHeight: '1.6'
+                  }}
+                >
+                  {service.description}
+                </p>
+              </div>
+
+              <a
+                href="#get-quote"
+                className="inline-flex items-center gap-2 font-semibold text-sm transition-all duration-300"
+                style={{
+                  color: '#D4B896',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.gap = '12px';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.gap = '8px';
+                }}
+              >
+                Learn more <span className="text-xl">»</span>
+              </a>
+            </motion.div>
           ))}
-        </Canvas>
-      </div>
+        </div>
 
-      {/* Bottom CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        viewport={{ once: true }}
-        className="text-center mt-16"
-      >
-        <button
-          className="group relative px-10 py-5 rounded-full text-lg md:text-xl font-bold transition-all duration-500 glassmorphism-strong hover:scale-105"
-          style={{
-            border: '2px solid rgba(0, 240, 255, 0.4)',
-            boxShadow: '0 0 30px rgba(0, 240, 255, 0.3)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 0 50px rgba(255, 0, 110, 0.6)';
-            e.currentTarget.style.borderColor = 'rgba(255, 0, 110, 0.6)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 240, 255, 0.3)';
-            e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.4)';
-          }}
+        {/* Bottom Row - 2 Cards Centered */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {services.slice(3, 5).map((service, index) => (
+            <motion.div
+              key={index + 3}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group relative overflow-hidden rounded-none transition-all duration-300"
+              style={{
+                background: '#1a1a1a',
+                minHeight: '280px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                padding: '40px 30px'
+              }}
+            >
+              <div>
+                <h3 
+                  className="text-2xl md:text-3xl font-bold mb-4"
+                  style={{
+                    color: '#D4B896',
+                    fontFamily: "'Arial Black', 'Impact', sans-serif",
+                    fontWeight: '900',
+                    lineHeight: '1.1',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  {service.title}
+                </h3>
+                <p 
+                  className="text-base mb-6"
+                  style={{
+                    color: 'rgba(212, 184, 150, 0.8)',
+                    lineHeight: '1.6',
+                    fontFamily: "'Arial', sans-serif"
+                  }}
+                >
+                  {service.description}
+                </p>
+              </div>
+
+              <a
+                href="#get-quote"
+                className="inline-flex items-center gap-2 font-semibold text-sm transition-all duration-300"
+                style={{
+                  color: '#D4B896',
+                  fontFamily: "'Arial', sans-serif"
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.gap = '12px';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.gap = '8px';
+                }}
+              >
+                Learn more <span className="text-xl">»</span>
+              </a>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Last Card - Brand Strategy - Centered */}
+        <div className="max-w-2xl mx-auto mt-8">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="group relative overflow-hidden rounded-none transition-all duration-300"
+            style={{
+              background: '#1a1a1a',
+              minHeight: '280px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              padding: '40px 30px'
+            }}
+          >
+            <div>
+              <h3 
+                className="text-2xl md:text-3xl font-bold mb-4"
+                style={{
+                  color: '#D4B896',
+                  fontFamily: "'Arial Black', 'Impact', sans-serif",
+                  fontWeight: '900',
+                  lineHeight: '1.1',
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                {services[5].title}
+              </h3>
+              <p 
+                className="text-base mb-6"
+                style={{
+                  color: 'rgba(212, 184, 150, 0.8)',
+                  lineHeight: '1.6',
+                  fontFamily: "'Arial', sans-serif"
+                }}
+              >
+                {services[5].description}
+              </p>
+            </div>
+
+            <a
+              href="#get-quote"
+              className="inline-flex items-center gap-2 font-semibold text-sm transition-all duration-300"
+              style={{
+                color: '#D4B896',
+                fontFamily: "'Arial', sans-serif"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.gap = '12px';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.gap = '8px';
+              }}
+            >
+              Learn more <span className="text-xl">»</span>
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-center mt-16"
         >
-          <span className="gradient-text-cyan-pink">
-            Get Custom Quote →
-          </span>
-        </button>
-      </motion.div>
-
-      {/* Decorative Neon Orbs */}
-      <div className="absolute top-20 left-10 w-40 h-40 bg-admark-cyan rounded-full opacity-10 blur-3xl animate-float" />
-      <div className="absolute bottom-20 right-10 w-48 h-48 bg-admark-pink rounded-full opacity-10 blur-3xl" style={{ animation: 'float 8s ease-in-out infinite', animationDelay: '2s' }} />
+          <a
+            href="#get-quote"
+            className="inline-block px-10 py-4 rounded-full font-bold text-lg transition-all duration-300"
+            style={{
+              background: '#1a1a1a',
+              color: '#D4B896',
+              border: '2px solid #1a1a1a'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = '#D4B896';
+              e.target.style.color = '#1a1a1a';
+              e.target.style.transform = 'translateY(-3px)';
+              e.target.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = '#1a1a1a';
+              e.target.style.color = '#D4B896';
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = 'none';
+            }}
+          >
+            View All Services →
+          </a>
+        </motion.div>
+      </div>
     </section>
   );
 }

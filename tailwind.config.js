@@ -7,30 +7,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        // AdMark Dark Theme Colors
+        // AdMark Golden Theme Colors
         'admark': {
           'bg-primary': '#0A0A0A',      // Almost Black Background
           'bg-secondary': '#141414',    // Slightly lighter black
           'bg-card': '#1A1A1A',         // Card background
-          'cyan': '#00F0FF',            // Neon Cyan
-          'pink': '#FF006E',            // Hot Pink
-          'purple': '#7B2CBF',          // Electric Purple
-          'cyan-glow': 'rgba(0, 240, 255, 0.5)',
-          'pink-glow': 'rgba(255, 0, 110, 0.5)',
-          'purple-glow': 'rgba(123, 44, 191, 0.5)',
+          'gold': '#FFC107',            // Primary Golden
+          'orange': '#FF9800',          // Secondary Orange
+          'white': '#FFFFFF',           // Pure White
+          'gold-glow': 'rgba(255, 193, 7, 0.5)',
+          'orange-glow': 'rgba(255, 152, 0, 0.5)',
         },
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-admark': 'linear-gradient(135deg, #00F0FF 0%, #7B2CBF 50%, #FF006E 100%)',
+        'gradient-admark': 'linear-gradient(135deg, #FFC107 0%, #FF9800 100%)',
         'gradient-dark': 'linear-gradient(180deg, #0A0A0A 0%, #141414 100%)',
       },
       boxShadow: {
-        'neon-cyan': '0 0 20px rgba(0, 240, 255, 0.5), 0 0 40px rgba(0, 240, 255, 0.3)',
-        'neon-pink': '0 0 20px rgba(255, 0, 110, 0.5), 0 0 40px rgba(255, 0, 110, 0.3)',
-        'neon-purple': '0 0 20px rgba(123, 44, 191, 0.5), 0 0 40px rgba(123, 44, 191, 0.3)',
-        'card-hover': '0 10px 40px rgba(0, 240, 255, 0.2), 0 0 20px rgba(255, 0, 110, 0.1)',
+        'neon-gold': '0 0 20px rgba(255, 193, 7, 0.5), 0 0 40px rgba(255, 193, 7, 0.3)',
+        'neon-orange': '0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.3)',
+        'card-hover': '0 10px 40px rgba(255, 193, 7, 0.2), 0 0 20px rgba(255, 152, 0, 0.1)',
       },
       animation: {
         'glow-pulse': 'glow-pulse 2s ease-in-out infinite',

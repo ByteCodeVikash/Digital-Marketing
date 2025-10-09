@@ -1,104 +1,429 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function PricingSection() {
-  const plans = [
-    {
-      name: 'Basic',
-      price: '$500',
-      period: '/month',
-      features: [
-        '10 Keywords',
-        '5 Pages Optimized',
-        'Monthly Reports',
-        'Basic Link Building',
-        'Email Support'
-      ]
+  const [activeService, setActiveService] = useState('seo');
+
+  const services = [
+    { 
+      id: 'seo', 
+      name: 'SEO', 
+      icon: '🔍',
+      color: '#FF4081',
+      description: 'Search Engine Optimization'
     },
-    {
-      name: 'Professional',
-      price: '$800',
-      period: '/month',
-      popular: true,
-      features: [
-        '25 Keywords',
-        '15 Pages Optimized',
-        'Bi-weekly Reports',
-        'Advanced Link Building',
-        'Priority Support',
-        'Content Strategy'
-      ]
+    { 
+      id: 'smo', 
+      name: 'SMO', 
+      icon: '📱',
+      color: '#00E676',
+      description: 'Social Media Optimization'
     },
-    {
-      name: 'Pro',
-      price: '$1,000',
-      period: '/month',
-      features: [
-        '50 Keywords',
-        '30 Pages Optimized',
-        'Weekly Reports',
-        'Premium Link Building',
-        '24/7 Support',
-        'Content Creation',
-        'Technical SEO'
-      ]
+    { 
+      id: 'ppc', 
+      name: 'PPC', 
+      icon: '💰',
+      color: '#E040FB',
+      description: 'Pay Per Click Advertising'
+    },
+    { 
+      id: 'web', 
+      name: 'Web Dev', 
+      icon: '💻',
+      color: '#40C4FF',
+      description: 'Website Development'
+    },
+    { 
+      id: 'content', 
+      name: 'Content', 
+      icon: '✍️',
+      color: '#B388FF',
+      description: 'Content Marketing'
+    },
+    { 
+      id: 'branding', 
+      name: 'Branding', 
+      icon: '🎨',
+      color: '#FFEB3B',
+      description: 'Brand Strategy & Design'
     }
   ];
 
-  return (
-    <section className="relative py-24 px-4 bg-gradient-to-b from-blue-900/30 to-purple-900/30">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-5xl md:text-7xl font-bold text-center mb-6 fade-in-up bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">
-          Simple, Transparent Pricing
-        </h2>
-        <p className="text-xl text-center text-gray-400 mb-16 fade-in-up">
-          Choose the perfect plan for your business needs
-        </p>
+  const pricingPlans = {
+    seo: [
+      {
+        name: 'Basic',
+        price: '$299',
+        features: [
+          'Keyword Research',
+          'On-Page SEO',
+          'Technical Audit',
+          'Monthly Reports',
+          '10 Keywords Tracking'
+        ]
+      },
+      {
+        name: 'Standard',
+        price: '$599',
+        features: [
+          'Everything in Basic',
+          'Link Building',
+          'Content Optimization',
+          'Competitor Analysis',
+          '25 Keywords Tracking'
+        ]
+      },
+      {
+        name: 'Premium',
+        price: '$999',
+        features: [
+          'Everything in Standard',
+          'Advanced Technical SEO',
+          'Local SEO',
+          'Priority Support',
+          'Unlimited Keywords'
+        ]
+      }
+    ],
+    smo: [
+      {
+        name: 'Basic',
+        price: '$199',
+        features: [
+          'Facebook & Instagram',
+          '10 Posts/Month',
+          'Basic Analytics',
+          'Community Management',
+          'Content Calendar'
+        ]
+      },
+      {
+        name: 'Standard',
+        price: '$399',
+        features: [
+          'All Social Platforms',
+          '20 Posts/Month',
+          'Advanced Analytics',
+          'Paid Ad Management',
+          'Influencer Outreach'
+        ]
+      },
+      {
+        name: 'Premium',
+        price: '$699',
+        features: [
+          'Everything in Standard',
+          '30+ Posts/Month',
+          'Video Content',
+          'Dedicated Manager',
+          'Growth Strategy'
+        ]
+      }
+    ],
+    ppc: [
+      {
+        name: 'Basic',
+        price: '$499',
+        features: [
+          'Google Ads Setup',
+          '$1000 Ad Budget',
+          'Keyword Research',
+          'Campaign Optimization',
+          'Monthly Reports'
+        ]
+      },
+      {
+        name: 'Standard',
+        price: '$899',
+        features: [
+          'Multi-Platform Ads',
+          '$2500 Ad Budget',
+          'A/B Testing',
+          'Landing Page Optimization',
+          'Bi-weekly Reports'
+        ]
+      },
+      {
+        name: 'Premium',
+        price: '$1499',
+        features: [
+          'Everything in Standard',
+          '$5000+ Ad Budget',
+          'Remarketing Campaigns',
+          'Dedicated PPC Specialist',
+          'Weekly Reports'
+        ]
+      }
+    ],
+    web: [
+      {
+        name: 'Basic',
+        price: '$999',
+        features: [
+          'Up to 5 Pages',
+          'Responsive Design',
+          'SEO Friendly',
+          'Contact Form',
+          '30 Days Support'
+        ]
+      },
+      {
+        name: 'Standard',
+        price: '$1999',
+        features: [
+          'Up to 10 Pages',
+          'Custom Design',
+          'CMS Integration',
+          'E-commerce Ready',
+          '60 Days Support'
+        ]
+      },
+      {
+        name: 'Premium',
+        price: '$3999',
+        features: [
+          'Unlimited Pages',
+          'Advanced Features',
+          'Custom Development',
+          'API Integration',
+          '90 Days Support'
+        ]
+      }
+    ],
+    content: [
+      {
+        name: 'Basic',
+        price: '$299',
+        features: [
+          '4 Blog Posts/Month',
+          'SEO Optimization',
+          'Keyword Research',
+          'Topic Research',
+          'Basic Editing'
+        ]
+      },
+      {
+        name: 'Standard',
+        price: '$599',
+        features: [
+          '8 Blog Posts/Month',
+          'Advanced SEO',
+          'Content Strategy',
+          'Social Media Posts',
+          'Professional Editing'
+        ]
+      },
+      {
+        name: 'Premium',
+        price: '$999',
+        features: [
+          '12+ Blog Posts/Month',
+          'Video Scripts',
+          'Email Campaigns',
+          'Content Calendar',
+          'Dedicated Writer'
+        ]
+      }
+    ],
+    branding: [
+      {
+        name: 'Basic',
+        price: '$799',
+        features: [
+          'Logo Design',
+          'Brand Colors',
+          'Typography Guide',
+          'Social Media Kit',
+          '2 Revisions'
+        ]
+      },
+      {
+        name: 'Standard',
+        price: '$1499',
+        features: [
+          'Everything in Basic',
+          'Brand Guidelines',
+          'Business Cards',
+          'Letterhead Design',
+          '5 Revisions'
+        ]
+      },
+      {
+        name: 'Premium',
+        price: '$2999',
+        features: [
+          'Everything in Standard',
+          'Brand Strategy',
+          'Marketing Collateral',
+          'Website Design',
+          'Unlimited Revisions'
+        ]
+      }
+    ]
+  };
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {plans.map((plan, i) => (
-            <div 
-              key={i}
-              className={`fade-in-up relative p-8 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-lg rounded-3xl border transition-all duration-500 transform hover:scale-105 ${
-                plan.popular 
-                  ? 'border-cyan-400/60 shadow-[0_0_50px_rgba(6,182,212,0.7)] scale-105' 
-                  : 'border-purple-500/20 hover:border-cyan-400/60 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]'
-              }`}
+  const currentPlans = pricingPlans[activeService];
+
+  return (
+    <section 
+      id="pricing" 
+      className="relative py-20 md:py-32 px-4"
+      style={{ background: '#f5f5f5' }}
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <p className="text-lg font-semibold mb-2" style={{ color: '#999', letterSpacing: '0.1em' }}>
+            PRICING
+          </p>
+          <h2 className="text-5xl md:text-6xl font-black mb-4" style={{ color: '#333' }}>
+            CHOOSE PLAN
+          </h2>
+          <div className="w-24 h-1 mx-auto" style={{ background: '#9C27B0' }} />
+        </motion.div>
+
+        {/* Service Icons */}
+        <div className="flex flex-wrap justify-center gap-8 mb-16">
+          {services.map((service, index) => (
+            <motion.button
+              key={service.id}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              onClick={() => setActiveService(service.id)}
+              className="flex flex-col items-center gap-3 transition-all duration-300 group"
+              style={{
+                opacity: activeService === service.id ? 1 : 0.6,
+                transform: activeService === service.id ? 'scale(1.1)' : 'scale(1)',
+              }}
             >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full text-sm font-bold">
-                  MOST POPULAR
+              <div
+                className="w-24 h-24 rounded-full flex items-center justify-center text-4xl transition-all duration-300"
+                style={{
+                  background: activeService === service.id 
+                    ? service.color 
+                    : `${service.color}40`,
+                  boxShadow: activeService === service.id 
+                    ? `0 10px 30px ${service.color}50` 
+                    : 'none',
+                }}
+              >
+                {service.icon}
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-lg" style={{ color: '#333' }}>
+                  {service.name}
                 </div>
-              )}
-              
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-white mb-4">{plan.name}</h3>
-                <div className="flex items-baseline justify-center mb-2">
-                  <span className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
-                    {plan.price}
-                  </span>
-                  <span className="text-gray-400 ml-2">{plan.period}</span>
+                <div className="text-xs" style={{ color: '#999' }}>
+                  {service.description}
                 </div>
               </div>
-
-              <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-gray-300">
-                    <span className="text-cyan-400 mr-3">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <button className={`w-full py-4 rounded-full font-bold transition-all duration-300 ${
-                plan.popular
-                  ? 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.8)]'
-                  : 'bg-white/10 border border-purple-500/30 hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]'
-              }`}>
-                Get Started
-              </button>
-            </div>
+            </motion.button>
           ))}
         </div>
+
+        {/* Pricing Cards */}
+        <motion.div
+          key={activeService}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="grid md:grid-cols-3 gap-8"
+        >
+          {currentPlans.map((plan, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="rounded-2xl p-8 transition-all duration-300 hover:scale-105"
+              style={{
+                background: index === 1 
+                  ? 'linear-gradient(135deg, #E1BEE7 0%, #F8BBD0 100%)'
+                  : '#FFE0E5',
+                boxShadow: index === 1 
+                  ? '0 10px 40px rgba(156, 39, 176, 0.3)'
+                  : '0 5px 20px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <h3 className="text-3xl font-black mb-4" style={{ color: '#333' }}>
+                {plan.name}
+              </h3>
+              
+              <div className="mb-6">
+                <span className="text-5xl font-black" style={{ color: '#E91E63' }}>
+                  {plan.price}
+                </span>
+                <span className="text-xl" style={{ color: '#666' }}>/month</span>
+              </div>
+
+              <div className="space-y-3 mb-8">
+                {plan.features.map((feature, idx) => (
+                  <div key={idx} className="flex items-start gap-2">
+                    <span style={{ color: '#4CAF50' }}>✓</span>
+                    <span style={{ color: '#555' }}>{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                className="w-full py-3 rounded-full font-bold transition-all duration-300"
+                style={{
+                  background: index === 1 ? '#9C27B0' : '#333',
+                  color: 'white',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-3px)';
+                  e.target.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                Get Started
+              </button>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-center mt-16"
+        >
+          <p className="text-lg mb-4" style={{ color: '#666' }}>
+            Need a custom plan? Let's discuss your requirements
+          </p>
+          <a
+            href="#get-quote"
+            className="inline-block px-10 py-4 rounded-full font-bold text-lg transition-all duration-300"
+            style={{
+              background: '#9C27B0',
+              color: 'white',
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'scale(1.05)';
+              e.target.style.boxShadow = '0 10px 30px rgba(156, 39, 176, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'scale(1)';
+              e.target.style.boxShadow = 'none';
+            }}
+          >
+            Contact Us for Custom Plan
+          </a>
+        </motion.div>
       </div>
     </section>
   );

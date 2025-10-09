@@ -18,74 +18,63 @@ export default function Navbar() {
     { name: 'Case Studies', href: '#case-studies' },
     { name: 'Portfolio', href: '#portfolio' },
     { name: 'About', href: '#about' },
-    { name: 'Pricing', href: '#pricing' },
     { name: 'Blog', href: '#blog' }
   ];
+
+  const handleSmoothScroll = (e, href) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-300 ${
         isScrolled 
-          ? 'backdrop-blur-xl shadow-[0_8px_32px_rgba(0,240,255,0.2)]' 
+          ? 'backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]' 
           : 'backdrop-blur-md'
       }`}
       style={{ 
-        minHeight: '80px',
         background: isScrolled 
-          ? 'rgba(10, 10, 10, 0.95)' 
-          : 'rgba(10, 10, 10, 0.8)',
-        borderBottom: isScrolled 
-          ? '1px solid rgba(0, 240, 255, 0.2)' 
-          : '1px solid rgba(0, 240, 255, 0.1)'
+          ? 'rgba(10, 10, 10, 0.98)' 
+          : 'rgba(10, 10, 10, 0.9)',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-5">
-          {/* Logo - AdMark Branding */}
-          <div className="flex-shrink-0 z-50">
-            <a href="#home" className="flex flex-col group">
-              <span 
-                className="text-3xl md:text-4xl font-black tracking-tight transition-all duration-300"
+        <div className="flex items-center justify-between" style={{ minHeight: '80px' }}>
+          {/* Logo - Left */}
+          <div className="flex-shrink-0">
+            <a href="#home" className="block group">
+              <img 
+                src="/src/assets/comp-logo.png"
+                alt="AdMark Digital Media"
+                className="h-14 w-auto transition-transform duration-300 group-hover:scale-105"
                 style={{
-                  background: 'linear-gradient(135deg, #00F0FF 0%, #7B2CBF 50%, #FF006E 100%)',
-                  backgroundSize: '200% 200%',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  textShadow: '0 0 30px rgba(0, 240, 255, 0.5)',
-                  filter: 'drop-shadow(0 0 10px rgba(0, 240, 255, 0.3))',
+                  filter: 'brightness(1.1) contrast(1.1) drop-shadow(0 0 10px rgba(255, 193, 7, 0.3))',
+                  mixBlendMode: 'lighten',
                 }}
-              >
-                AdMark
-              </span>
-              <span 
-                className="text-xs md:text-sm font-medium tracking-wider mt-0.5 transition-all duration-300"
-                style={{
-                  color: 'rgba(0, 240, 255, 0.8)',
-                  textShadow: '0 0 10px rgba(0, 240, 255, 0.3)',
-                  letterSpacing: '0.15em'
-                }}
-              >
-                MAGNETIZE GROWTH
-              </span>
+              />
             </a>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          {/* Center Navigation - Desktop */}
+          <div className="hidden lg:flex items-center space-x-8 flex-1 justify-center">
             {navLinks.map((link, index) => (
               <a
                 key={index}
                 href={link.href}
-                className="relative font-semibold text-sm xl:text-base py-2 transition-all duration-300 group"
+                onClick={(e) => handleSmoothScroll(e, link.href)}
+                className="relative font-semibold text-base py-2 transition-all duration-300 group"
                 style={{
                   color: 'rgba(255, 255, 255, 0.9)',
                   fontFamily: "'Inter', 'Poppins', sans-serif",
                   letterSpacing: '0.02em'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.color = '#00F0FF';
-                  e.target.style.textShadow = '0 0 10px rgba(0, 240, 255, 0.5)';
+                  e.target.style.color = '#FFC107';
+                  e.target.style.textShadow = '0 0 10px rgba(255, 193, 7, 0.5)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.color = 'rgba(255, 255, 255, 0.9)';
@@ -96,43 +85,62 @@ export default function Navbar() {
                 <span 
                   className="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"
                   style={{
-                    background: 'linear-gradient(90deg, #00F0FF 0%, #FF006E 100%)',
-                    boxShadow: '0 0 10px rgba(0, 240, 255, 0.8)'
+                    background: 'linear-gradient(90deg, #FFC107 0%, #FF9800 100%)',
+                    boxShadow: '0 0 10px rgba(255, 193, 7, 0.8)'
                   }}
-                ></span>
+                />
               </a>
             ))}
+          </div>
+
+          {/* Right Side CTAs - Desktop */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             <a
-              href="#contact"
-              className="px-6 py-3 rounded-full font-bold text-sm xl:text-base whitespace-nowrap transition-all duration-300 relative overflow-hidden group"
+              href="#pricing"
+              onClick={(e) => handleSmoothScroll(e, '#pricing')}
+              className="px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 flex items-center gap-2 whitespace-nowrap"
               style={{
                 background: 'rgba(26, 26, 26, 0.8)',
-                backdropFilter: 'blur(10px)',
-                border: '2px solid rgba(0, 240, 255, 0.4)',
-                boxShadow: '0 0 20px rgba(0, 240, 255, 0.3)',
+                border: '2px solid rgba(255, 193, 7, 0.4)',
+                color: '#FFC107',
                 fontFamily: "'Inter', sans-serif"
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'scale(1.05)';
-                e.target.style.boxShadow = '0 0 30px rgba(255, 0, 110, 0.6)';
-                e.target.style.borderColor = 'rgba(255, 0, 110, 0.6)';
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 5px 20px rgba(255, 193, 7, 0.4)';
+                e.target.style.borderColor = '#FFC107';
+                e.target.style.background = 'rgba(255, 193, 7, 0.1)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = '0 0 20px rgba(0, 240, 255, 0.3)';
-                e.target.style.borderColor = 'rgba(0, 240, 255, 0.4)';
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'none';
+                e.target.style.borderColor = 'rgba(255, 193, 7, 0.4)';
+                e.target.style.background = 'rgba(26, 26, 26, 0.8)';
               }}
             >
-              <span
-                style={{
-                  background: 'linear-gradient(90deg, #00F0FF, #FF006E)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
-                Get Started
-              </span>
+              💎 Pricing Plan
+            </a>
+
+            <a
+              href="#get-quote"
+              onClick={(e) => handleSmoothScroll(e, '#get-quote')}
+              className="px-6 py-2.5 rounded-full font-bold text-sm whitespace-nowrap transition-all duration-300"
+              style={{
+                background: 'linear-gradient(135deg, #FFC107 0%, #FF9800 100%)',
+                boxShadow: '0 4px 20px rgba(255, 193, 7, 0.4)',
+                fontFamily: "'Inter', sans-serif",
+                color: '#000'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px) scale(1.05)';
+                e.target.style.boxShadow = '0 8px 30px rgba(255, 193, 7, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 4px 20px rgba(255, 193, 7, 0.4)';
+              }}
+            >
+              🎯 Free Audit
             </a>
           </div>
 
@@ -143,16 +151,8 @@ export default function Navbar() {
               className="p-2 rounded-lg transition-all duration-300"
               aria-label="Toggle menu"
               style={{
-                color: 'rgba(255, 255, 255, 0.9)',
-                background: isMobileMenuOpen ? 'rgba(0, 240, 255, 0.1)' : 'transparent'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.color = '#00F0FF';
-                e.target.style.background = 'rgba(0, 240, 255, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.color = 'rgba(255, 255, 255, 0.9)';
-                if (!isMobileMenuOpen) e.target.style.background = 'transparent';
+                color: '#FFC107',
+                background: isMobileMenuOpen ? 'rgba(255, 193, 7, 0.1)' : 'transparent'
               }}
             >
               <svg
@@ -182,7 +182,7 @@ export default function Navbar() {
           style={{
             background: 'rgba(10, 10, 10, 0.98)',
             backdropFilter: 'blur(20px)',
-            borderTop: '1px solid rgba(0, 240, 255, 0.2)',
+            borderTop: '1px solid rgba(255, 193, 7, 0.2)',
           }}
         >
           <div className="px-4 pt-2 pb-6 space-y-2">
@@ -190,7 +190,10 @@ export default function Navbar() {
               <a
                 key={index}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => {
+                  handleSmoothScroll(e, link.href);
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block px-4 py-3 rounded-lg font-semibold transition-all duration-300"
                 style={{
                   color: 'rgba(255, 255, 255, 0.9)',
@@ -198,39 +201,50 @@ export default function Navbar() {
                   background: 'transparent'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.color = '#00F0FF';
-                  e.target.style.background = 'rgba(0, 240, 255, 0.1)';
-                  e.target.style.textShadow = '0 0 10px rgba(0, 240, 255, 0.5)';
+                  e.target.style.color = '#FFC107';
+                  e.target.style.background = 'rgba(255, 193, 7, 0.1)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.color = 'rgba(255, 255, 255, 0.9)';
                   e.target.style.background = 'transparent';
-                  e.target.style.textShadow = 'none';
                 }}
               >
                 {link.name}
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-4 py-3 rounded-full font-bold text-center transition-all duration-300 mt-4"
-              style={{
-                background: 'linear-gradient(90deg, #00F0FF 0%, #FF006E 100%)',
-                boxShadow: '0 0 20px rgba(0, 240, 255, 0.4)',
-                fontFamily: "'Inter', sans-serif"
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'scale(1.03)';
-                e.target.style.boxShadow = '0 0 30px rgba(255, 0, 110, 0.6)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = '0 0 20px rgba(0, 240, 255, 0.4)';
-              }}
-            >
-              Get Started
-            </a>
+            
+            <div className="pt-4 space-y-3">
+              <a
+                href="#pricing"
+                onClick={(e) => {
+                  handleSmoothScroll(e, '#pricing');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block px-4 py-3 rounded-full font-semibold text-center transition-all duration-300"
+                style={{
+                  background: 'rgba(26, 26, 26, 0.8)',
+                  border: '2px solid rgba(255, 193, 7, 0.4)',
+                  color: '#FFC107'
+                }}
+              >
+                💎 Pricing Plan
+              </a>
+
+              <a
+                href="#get-quote"
+                onClick={(e) => {
+                  handleSmoothScroll(e, '#get-quote');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block px-4 py-3 rounded-full font-bold text-center transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #FFC107 0%, #FF9800 100%)',
+                  color: '#000'
+                }}
+              >
+                🎯 Free Audit
+              </a>
+            </div>
           </div>
         </div>
       )}
